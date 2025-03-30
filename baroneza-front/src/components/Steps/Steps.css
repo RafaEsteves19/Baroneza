@@ -7,7 +7,7 @@
   
   .steps-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 colunas por padrão */
+    grid-template-columns: repeat(4, 1fr);
   }
   
   .step-button {
@@ -50,13 +50,13 @@
   
   @media (max-width: 768px) {
     .steps-grid {
-      grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas menores que 768px */
+      grid-template-columns: repeat(2, 1fr);
     }
   }
   
   @media (max-width: 480px) {
     .steps-grid {
-      grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas menores que 480px */
+      grid-template-columns: repeat(2, 1fr);
     }
   
     .step-button {
