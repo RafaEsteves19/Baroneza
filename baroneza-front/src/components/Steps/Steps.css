@@ -60,20 +60,20 @@
     }
   
     .step-button {
-      padding: 12px; /* Ajusta o padding para telas menores */
+      padding: 12px;
     }
   
     .step-image {
-      width: 60px; /* Reduz a imagem */
+      width: 60px;
       height: 60px;
     }
   
     .step-text {
-      font-size: 18px; /* Ajusta o tamanho da fonte */
+      font-size: 18px;
     }
   
     .steps-container {
-      padding: 15px; /* Ajusta o padding */
+      padding: 15px;
     }
   }
    
