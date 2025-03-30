@@ -1,41 +1,57 @@
-// src/components/login/Login.js
-import React, { useState } from 'react';
-import axios from 'axios';
-import './Login.css'; // Estilos específicos para o componente Login
-import { toast, ToastContainer } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css';
+"use client"
 
-// Variável global password, acessível para outros componentes
-let password = false;
+import { useState, useEffect } from "react"
+import axios from "axios"
+import "./Login.css"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { useNavigate } from "react-router-dom"
+
+let password = false
 
 const Login = () => {
-  const [inputPassword, setInputPassword] = useState('');
-  const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
+  const [inputPassword, setInputPassword] = useState("")
+  const [isPasswordCorrect, setIsPasswordCorrect] = useState(false)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isPasswordCorrect) {
+      const redirectTimer = setTimeout(() => {
+        navigate("/")
+      }, 2000)
+
+      return () => clearTimeout(redirectTimer)
+    }
+  }, [isPasswordCorrect, navigate])
 
   const handlePasswordSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const response = await axios.post('http://localhost:5000/verify-password', { password: inputPassword });
-      
+      const response = await axios.post("http://localhost:5000/verify-password", { password: inputPassword })
+
       if (response.data.success) {
-        setIsPasswordCorrect(true);
-        password = true; 
-        toast.success('Senha correta!');
+        setIsPasswordCorrect(true)
+        password = true
+        toast.success("Senha correta!")
       } else {
-        setIsPasswordCorrect(false);
-        password = false; 
-        toast.error('Senha incorreta');
+        setIsPasswordCorrect(false)
+        password = false
+        toast.error("Senha incorreta")
       }
     } catch (error) {
-      setIsPasswordCorrect(false);
-      password = false;
-      toast.error('Erro na verificação da senha');
+      setIsPasswordCorrect(false)
+      password = false
+      toast.error("Senha incorreta")
     }
-  };
+  }
 
   const handlePasswordChange = (e) => {
-    setInputPassword(e.target.value);
-  };
+    setInputPassword(e.target.value)
+  }
+
+  const handleExit = () => {
+    navigate("/")
+  }
 
   return (
     <div className="password-lock-container">
@@ -49,12 +65,20 @@ const Login = () => {
           required
           className="password-input"
         />
-        <button type="submit" className="submit-button">Verificar</button>
+        <button type="submit" className="submit-button">
+          Verificar
+        </button>
       </form>
+
+      <button onClick={handleExit} className="exit-button">
+        Sair
+      </button>
+
       <ToastContainer />
     </div>
-  );
-};
+  )
+}
 
-export { password };
-export default Login;
+export { password }
+export default Login
+

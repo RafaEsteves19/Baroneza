@@ -1,44 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import Header from "./components/Header/Header"
+import Carrossel from "./components/Carousel/Carousel"
+import Lock from "./components/Lock/Lock"
+import Login, { password } from "./components/Login/Login"
+import Steps from "./components/Steps/Steps"
 
-import Header from './components/Header/Header';
-import Carrossel from './components/Carousel/Carousel';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Lock from './components/Lock/Lock';  // Importa o componente Lock (botão do cadeado)
-import Login from './components/Login/Login';  // Importa o componente Login (formulário)
-
-import './App.css';
+import "./App.css"
 
 function App() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [isAuthenticated, setIsAuthenticated] = useState(password)
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
+      setWindowWidth(window.innerWidth)
+    }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  useEffect(() => {
+    setIsAuthenticated(password)
+
+    const checkPasswordInterval = setInterval(() => {
+      setIsAuthenticated(password)
+    }, 500)
+
+    return () => {
+      clearInterval(checkPasswordInterval)
+    }
+  }, [])
 
   return (
-    <div className="App">
-      <Header />
-      {windowWidth > 450 && <Carrossel />}
-      <Router>
-      <Routes>
-        {/* Rota para o componente Lock */}
-        <Route path="/" element={<Lock />} />
-
-        {/* Rota para o componente Login */}
-        <Route path="/login" element={<Login />} />
-      </Routes>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Header />
+                {windowWidth > 450 && <Carrossel />}
+                <Steps/>
+                {!isAuthenticated && <Lock />}
+              </>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
     </Router>
-    </div>
-  );
+  )
 }
 
-export default App;
-
+export default App

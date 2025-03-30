@@ -1,28 +1,244 @@
-/* Estilos para o componente Lock */
-.lock-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.password-lock-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f7f7f7;
+  padding: 20px;
+}
+
+.password-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 320px;
+  padding: 25px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.password-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #585858;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #444444;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.success-message {
+  color: rgb(65, 65, 65);
+  font-size: 1rem;
+  margin-top: 15px;
+}
+
+.exit-button {
+  padding: 8px 16px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+  max-width: 320px;
+  transition: background-color 0.3s;
+}
+
+.exit-button:hover {
+  background-color: #d32f2f;
+}
+
+@media (max-width: 400px) {
+  .password-form {
+    max-width: 280px;
+    padding: 18px;
+    gap: 8px;
   }
-  
-  .lock-button {
-    font-size: 12px;
-    background: #636363;
-    color: #fff;
-    padding: 6px 8px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+
+  .password-form h5 {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
   }
-  
-  .lock-button:hover {
-    background-color: #474747;
+
+  .password-input {
+    padding: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
   }
-  
-  .lock-button i {
-    font-size: 1.5rem;
+
+  .submit-button {
+    padding: 8px;
+    font-size: 0.9rem;
   }
-  
+
+  .exit-button {
+    max-width: 280px;
+    padding: 7px 14px;
+    font-size: 0.9rem;
+  }
+
+  .error-message {
+    font-size: 0.8rem;
+  }
+
+  .success-message {
+    font-size: 0.9rem;
+  }
+
+  .Toastify__toast-container {
+    width: 280px;
+  }
+
+  .Toastify__toast {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 340px) {
+  .password-form {
+    max-width: 260px;
+    padding: 16px;
+    gap: 6px;
+  }
+
+  .password-form h5 {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  .password-input {
+    padding: 7px;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  .submit-button {
+    padding: 7px;
+    font-size: 0.85rem;
+  }
+
+  .exit-button {
+    max-width: 260px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .Toastify__toast-container {
+    width: 260px;
+  }
+
+  .Toastify__toast {
+    font-size: 0.85rem;
+    padding: 7px;
+  }
+}
+
+@media (max-width: 320px) {
+  .password-form {
+    max-width: 240px;
+    padding: 14px;
+    gap: 5px;
+  }
+
+  .password-form h5 {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+
+  .password-input {
+    padding: 6px;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+
+  .submit-button {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+
+  .exit-button {
+    max-width: 240px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+
+  .Toastify__toast-container {
+    width: 240px;
+  }
+
+  .Toastify__toast {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 280px) {
+  .password-form {
+    max-width: 220px;
+    padding: 12px;
+    gap: 4px;
+  }
+
+  .password-form h5 {
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+  }
+
+  .password-input {
+    padding: 5px;
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+  }
+
+  .submit-button {
+    padding: 5px;
+    font-size: 0.75rem;
+  }
+
+  .exit-button {
+    max-width: 220px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+
+  .Toastify__toast-container {
+    width: 220px;
+  }
+
+  .Toastify__toast {
+    font-size: 0.75rem;
+    padding: 5px;
+  }
+}
