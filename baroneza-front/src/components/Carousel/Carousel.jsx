@@ -17,7 +17,7 @@ function Carousel() {
       setFixedData(res.data)
     })
   }, [])
-
+  
   useEffect(() => {
     setIsAuthenticated(password)
 
