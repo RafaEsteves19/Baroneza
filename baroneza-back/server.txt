@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
-// Storage
+//Storage
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -29,8 +29,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Load and Save Carousel
-
 const loadCarousel = () => {
   if (!fs.existsSync("carousel.json")) return [];
   return JSON.parse(fs.readFileSync("carousel.json", "utf8"));
@@ -40,18 +38,7 @@ const saveCarousel = (data) => {
   fs.writeFileSync("carousel.json", JSON.stringify(data, null, 2));
 };
 
-// Load and Save NewComponents
-
-const loadNewComponents = () => {
-  if (!fs.existsSync("newcomponents.json")) return [];
-  return JSON.parse(fs.readFileSync("newcomponents.json", "utf8"));
-};
-
-const saveNewComponents = (data) => {
-  fs.writeFileSync("newcomponents.json", JSON.stringify(data, null, 2));
-};
-
-// Password
+//Password
 
 const encryptedPassword = bcrypt.hashSync("1234", 10);
 
@@ -70,7 +57,6 @@ app.post("/verify-password", async (req, res) => {
 });
 
 // Carousel
-
 app.post("/save", upload.single("image"), (req, res) => {
   const image = req.file ? `/uploads/${req.file.filename}` : null;
   const newEntry = { image };
@@ -101,30 +87,6 @@ app.delete("/uploads/:filename", (req, res) => {
   } else {
     res.status(404).json({ success: false, message: "Arquivo não encontrado" });
   }
-});
-
-// NewComponents
-
-app.post("/newcomponents/save", upload.single("image"), (req, res) => {
-  const { title, text, link } = req.body;
-  
-  // Verifique se os dados estão sendo enviados corretamente
-  if (!title || !text || !link) {
-    return res.status(400).json({ success: false, message: "Título, texto e link são obrigatórios!" });
-  }
-
-  const image = req.file ? `/uploads/${req.file.filename}` : null;
-  const newComponent = { title, text, link, image };
-
-  const newcomponents = loadNewComponents();
-  newcomponents.push(newComponent);
-  saveNewComponents(newcomponents);
-
-  res.json({ success: true, newcomponents });
-});
-
-app.get("/newcomponents", (req, res) => {
-  res.json(loadNewComponents());
 });
 
 app.listen(PORT, () => {

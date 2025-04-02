@@ -5,6 +5,7 @@ import Carrossel from "./components/Carousel/Carousel"
 import Lock from "./components/Lock/Lock"
 import Login, { password } from "./components/Login/Login"
 import Steps from "./components/Steps/Steps"
+import New from "./components/NewComponents/NewCompenents"
 
 import "./App.css"
 
@@ -47,6 +48,7 @@ function App() {
                 <Header />
                 {windowWidth > 450 && <Carrossel />}
                 <Steps/>
+                <New/>
                 {!isAuthenticated && <Lock />}
               </>
             }
