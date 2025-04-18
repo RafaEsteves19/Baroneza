@@ -8,6 +8,7 @@ import Steps from "./components/Steps/Steps"
 import New from "./components/NewComponents/NewCompenents"
 
 import "./App.css"
+import WhatsAppButton from "./components/WhatsAppButton/WhatsAppButton"
 
 function App() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -50,6 +51,7 @@ function App() {
                 <Steps/>
                 <New/>
                 {!isAuthenticated && <Lock />}
+                <WhatsAppButton/>
               </>
             }
           />

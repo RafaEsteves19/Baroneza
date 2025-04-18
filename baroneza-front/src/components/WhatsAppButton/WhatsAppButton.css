@@ -1,0 +1,48 @@
+.whatsapp-button {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background-color: transparent; /* começa sem fundo */
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    width: fit-content;
+    padding: 0; /* sem padding no estado normal */
+    transition: all 0.3s ease;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    overflow: hidden; /* evita que o texto "vaze" quando oculto */
+  }
+  
+  .whatsapp-button:hover {
+    background-color: #25D366;
+    padding: 10px 15px; /* aparece o fundo verde ao hover */
+  }
+  
+  .whatsapp-icon {
+    width: 70px;
+    height: 70px;
+    transition: transform 0.3s ease;
+  }
+  
+  .whatsapp-text {
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    padding-right: 5px;
+    padding-left: 5px;
+    pointer-events: none;
+  }
+  
+  .whatsapp-text.show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .whatsapp-button:hover .whatsapp-icon {
+    transform: scale(1.1);
+  }
+  
