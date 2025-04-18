@@ -6,7 +6,6 @@ function New() {
   const [fixedData, setFixedData] = useState([]);
 
   useEffect(() => {
-    // Mudando a URL para /newcomponents
     axios.get("http://localhost:5000/newcomponents").then((res) => {
       setFixedData(res.data);
     });
@@ -29,8 +28,8 @@ function New() {
   };
 
   const saveData = async () => {
-    const formData = new FormData();
     const component = components[0];
+    const formData = new FormData();
 
     formData.append("title", component.title);
     formData.append("text", component.text);
@@ -40,13 +39,11 @@ function New() {
     }
 
     try {
-      // Mudando a URL para /save
-      await axios.post("http://localhost:5000/save", formData);
+      await axios.post("http://localhost:5000/newcomponents/save", formData);
       setComponents([]);
-      // Mudando a URL para /newcomponents
       axios.get("http://localhost:5000/newcomponents").then((res) => setFixedData(res.data));
     } catch (error) {
-      console.error("Error saving data", error);
+      console.error("Erro ao salvar componente", error);
     }
   };
 
@@ -93,7 +90,6 @@ function New() {
           <a href={item.link} target="_blank" rel="noopener noreferrer">{item.link}</a>
           {item.image && (
             <img
-              // Corrigindo o caminho da imagem para corresponder ao novo caminho do backend
               src={`http://localhost:5000${item.image}`}
               alt="Uploaded"
               style={{ maxWidth: "100px" }}

@@ -1,0 +1,24 @@
+{
+  "carousel": [
+    {
+      "image": "/uploads/1743051841082.jpg"
+    },
+    {
+      "image": "/uploads/1743051850395.jpg"
+    },
+    {
+      "image": "/uploads/1743359949218.jpg"
+    },
+    {
+      "image": "/uploads/1743548508310.jpg"
+    }
+  ],
+  "newcomponents": [
+    {
+      "title": "sdsd",
+      "text": "dsadasd",
+      "link": "sdadsa",
+      "image": "/uploads/1745011350396.jpeg"
+    }
+  ]
+}

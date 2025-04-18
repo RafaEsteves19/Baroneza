@@ -12,8 +12,19 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
-// Storage
+const DATA_FILE = "data.json";
 
+// Helpers
+const loadData = () => {
+  if (!fs.existsSync(DATA_FILE)) return { carousel: [], newcomponents: [] };
+  return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+};
+
+const saveData = (data) => {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+};
+
+// Storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadPath = "uploads/";
@@ -29,34 +40,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Load and Save Carousel
-
-const loadCarousel = () => {
-  if (!fs.existsSync("carousel.json")) return [];
-  return JSON.parse(fs.readFileSync("carousel.json", "utf8"));
-};
-
-const saveCarousel = (data) => {
-  fs.writeFileSync("carousel.json", JSON.stringify(data, null, 2));
-};
-
-// Load and Save NewComponents
-
-const loadNewComponents = () => {
-  if (!fs.existsSync("newcomponents.json")) return [];
-  return JSON.parse(fs.readFileSync("newcomponents.json", "utf8"));
-};
-
-const saveNewComponents = (data) => {
-  fs.writeFileSync("newcomponents.json", JSON.stringify(data, null, 2));
-};
-
-// Password
-
+// Password logic
 const encryptedPassword = bcrypt.hashSync("1234", 10);
 
-function password(password) {
-  return bcrypt.compare(password, encryptedPassword);
+function password(inputPassword) {
+  return bcrypt.compare(inputPassword, encryptedPassword);
 }
 
 app.post("/verify-password", async (req, res) => {
@@ -69,21 +57,21 @@ app.post("/verify-password", async (req, res) => {
   }
 });
 
-// Carousel
-
-app.post("/save", upload.single("image"), (req, res) => {
+// CAROUSEL ROUTES
+app.post("/save-carousel", upload.single("image"), (req, res) => {
   const image = req.file ? `/uploads/${req.file.filename}` : null;
   const newEntry = { image };
 
-  const carousel = loadCarousel();
-  carousel.push(newEntry);
-  saveCarousel(carousel);
+  const data = loadData();
+  data.carousel.push(newEntry);
+  saveData(data);
 
-  res.json({ success: true, carousel });
+  res.json({ success: true, carousel: data.carousel });
 });
 
 app.get("/carousel", (req, res) => {
-  res.json(loadCarousel());
+  const data = loadData();
+  res.json(data.carousel || []);
 });
 
 app.delete("/uploads/:filename", (req, res) => {
@@ -93,9 +81,9 @@ app.delete("/uploads/:filename", (req, res) => {
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
 
-    const carousel = loadCarousel();
-    const updatedCarousel = carousel.filter((entry) => !entry.image.includes(filename));
-    saveCarousel(updatedCarousel);
+    const data = loadData();
+    data.carousel = data.carousel.filter(entry => !entry.image.includes(filename));
+    saveData(data);
 
     res.json({ success: true, message: "Imagem deletada com sucesso" });
   } else {
@@ -103,12 +91,10 @@ app.delete("/uploads/:filename", (req, res) => {
   }
 });
 
-// NewComponents
-
+// NEW COMPONENTS ROUTES
 app.post("/newcomponents/save", upload.single("image"), (req, res) => {
   const { title, text, link } = req.body;
-  
-  // Verifique se os dados estão sendo enviados corretamente
+
   if (!title || !text || !link) {
     return res.status(400).json({ success: false, message: "Título, texto e link são obrigatórios!" });
   }
@@ -116,15 +102,16 @@ app.post("/newcomponents/save", upload.single("image"), (req, res) => {
   const image = req.file ? `/uploads/${req.file.filename}` : null;
   const newComponent = { title, text, link, image };
 
-  const newcomponents = loadNewComponents();
-  newcomponents.push(newComponent);
-  saveNewComponents(newcomponents);
+  const data = loadData();
+  data.newcomponents.push(newComponent);
+  saveData(data);
 
-  res.json({ success: true, newcomponents });
+  res.json({ success: true, newcomponents: data.newcomponents });
 });
 
 app.get("/newcomponents", (req, res) => {
-  res.json(loadNewComponents());
+  const data = loadData();
+  res.json(data.newcomponents || []);
 });
 
 app.listen(PORT, () => {
